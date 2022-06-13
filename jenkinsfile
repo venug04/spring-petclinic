@@ -4,24 +4,16 @@ pipeline {
     }
     agent any
     stages {
-        stage('Build Server') {
-            agent {
-                docker {
-                    image 'maven:3-jdk-11'
-                    reuseNode true
-                }
-            }
+        stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh './mvnw clean package'
             }
         }
         
         stage('Create docker images') {
             steps {
                 script {
-                    sh 'mkdir -p target/docker'
-                    image_api = docker.build("${env.REGISTRY}/api:${env.VERSION}", "--build-arg VERSION=${env.VERSION} -f devops/Dockerfile-api target/docker/")
-                    image_api.push("${env.VERSION}")
+                    ./mvnw spring-boot:build-image
                                     }
             }
         }
