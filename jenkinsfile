@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
                 sh './mvnw clean compile'
                 
@@ -21,10 +21,11 @@ pipeline {
             }
         }
         
-        stage('Create docker images') {
+        stage('Build images') {
             steps {
+            		sh 'docker build -t vbacku/spring-petclinic:1.0 .'
                
-                     sh './mvnw spring-boot:build-image'
+                    sh 'docker push vbacku/spring-petclinic:1.0'
                                     }
             
         }
