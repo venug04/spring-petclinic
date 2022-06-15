@@ -9,6 +9,7 @@ Get started
 ## Starting the petclinic App using docker
 
 docker pull vbacku/spring-petclinic:latest
+
 docker run -d --name petclinic -p 8080:8080 vbacku/spring-petclinic:latest
 
 ## Running petclinic locally
